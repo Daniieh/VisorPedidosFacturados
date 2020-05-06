@@ -1,0 +1,234 @@
+﻿<Window
+    x:Class="VisorPedidosFacturados.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:VisorPedidosFacturados"
+    xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="VISOR PEDIDOS FACTURADOS"
+    Width="400"
+    Height="800"
+    Background="#222831"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    WindowStartupLocation="Manual"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <Style
+            x:Key="EstiloListaFinOpe"
+            BasedOn="{StaticResource MaterialDesignListBox}"
+            TargetType="ListBox">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Padding" Value="5,5,5,5" />
+            <Setter Property="HorizontalContentAlignment" Value="left" />
+        </Style>
+
+        <Style x:Key="EstiloItemsListaOperarioRecuento" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Background" Value="#212121" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+            <Setter Property="Padding" Value="0,0,0,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border
+                            x:Name="Bd"
+                            Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="true">
+                            <ContentPresenter
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="Black" />
+                    <!--<Setter Property="Background" Value="#14ffec" />-->
+                </Trigger>
+                <EventTrigger RoutedEvent="Selected">
+                    <BeginStoryboard>
+                        <Storyboard Timeline.DesiredFrameRate="15">
+                            <ColorAnimation
+                                Storyboard.TargetProperty="Background.Color"
+                                To="#14ffec"
+                                Duration="0:0:0.2" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Unselected">
+                    <BeginStoryboard>
+                        <Storyboard Timeline.DesiredFrameRate="15">
+                            <ColorAnimation
+                                Storyboard.TargetProperty="Background.Color"
+                                To="#212121"
+                                Duration="0:0:0.2" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Loaded">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard Timeline.DesiredFrameRate="15">
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="MaxHeight"
+                                    From="0"
+                                    To="90"
+                                    Duration="0:0:0.2" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Selected">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard Timeline.DesiredFrameRate="15">
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="Height"
+                                    From="40"
+                                    To="60"
+                                    Duration="0:0:0.2" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Unselected">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard Timeline.DesiredFrameRate="15">
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="Height"
+                                    From="60"
+                                    To="40"
+                                    Duration="0:0:0.2" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="20*" />
+            <ColumnDefinition Width="60*" />
+            <ColumnDefinition Width="20*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="70*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Viewbox
+            Grid.Row="1"
+            Grid.Column="1"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Stretch">
+            <materialDesign:Card
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="{x:Null}">
+                <Button
+                    x:Name="BotonRestarUnoFecha"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Click="BotonRestarUnoFecha_Click"
+                    Foreground="{x:Null}">
+                    <Image Source="Imagenes/icono anterior blanco.png" />
+                </Button>
+            </materialDesign:Card>
+        </Viewbox>
+
+        <Viewbox
+            Grid.Row="1"
+            Grid.Column="2"
+            HorizontalAlignment="Center">
+            <materialDesign:Card Background="{x:Null}">
+                <TextBlock
+                    Name="TextoFecha"
+                    Foreground="#ffffff"
+                    MouseUp="TextoFecha_MouseUp"
+                    Text="{Binding FechaOrdenes, StringFormat={}{0:dd-MM-yyyy}}" />
+            </materialDesign:Card>
+        </Viewbox>
+
+        <Viewbox
+            Grid.Row="1"
+            Grid.Column="3"
+            Width="auto"
+            Height="auto"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Stretch">
+            <materialDesign:Card
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="{x:Null}">
+                <Button
+                    x:Name="BotonSumarUnoFecha"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Click="BotonSumarUnoFecha_Click"
+                    Foreground="{x:Null}">
+                    <Image Source="Imagenes/icono siguiente blanco.png" />
+                </Button>
+            </materialDesign:Card>
+        </Viewbox>
+        <ListBox
+            x:Name="ListaPedidosFacturas"
+            Grid.Row="3"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            Background="Transparent"
+            ItemsSource="{Binding ListaPedidos}"
+            ScrollViewer.CanContentScroll="False"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            Style="{StaticResource EstiloListaFinOpe}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Viewbox Margin="0">
+                        <Grid
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="9*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5*" />
+                                <RowDefinition Height="12*" />
+                            </Grid.RowDefinitions>
+
+
+                            <TextBlock
+                                x:Name="TextoPedido"
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Background="{Binding ColorFondoPedido}"
+                                Foreground="White"
+                                Text="{Binding IdPedido}"
+                                TextWrapping="Wrap" />
+                        </Grid>
+                    </Viewbox>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>

@@ -204,27 +204,42 @@
                         <Grid
                             Grid.Row="0"
                             Grid.Column="1"
-                            Margin="0">
+                            Margin="0"
+                            Background="{Binding ColorFondoPedido}"
+                            ToolTip="{Binding NombreCliente}"
+                            ToolTipService.BetweenShowDelay="50"
+                            ToolTipService.InitialShowDelay="50"
+                            ToolTipService.ShowDuration="10000">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="9*" />
+                                <ColumnDefinition Width="20*" />
+                                <ColumnDefinition Width="10*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="5*" />
-                                <RowDefinition Height="12*" />
+                                <RowDefinition Height="1*" />
                             </Grid.RowDefinitions>
 
 
                             <TextBlock
                                 x:Name="TextoPedido"
-                                Grid.Row="2"
+                                Grid.Row="0"
                                 Grid.Column="0"
-                                Grid.ColumnSpan="2"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Background="{Binding ColorFondoPedido}"
                                 Foreground="White"
-                                Text="{Binding IdPedido}"
+                                Text="{Binding TextoPedido}"
                                 TextWrapping="Wrap" />
+
+
+
+                            <TextBlock
+                                x:Name="TextoCliente"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Margin="15,0,0,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Foreground="White"
+                                Text="{Binding CodigoCliente}" />
                         </Grid>
                     </Viewbox>
                 </DataTemplate>

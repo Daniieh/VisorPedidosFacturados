@@ -47,8 +47,8 @@ namespace VisorPedidosFacturados
 			{
 				Conexion.Open();
 
-				String Query = "SELECT LASINVNUM_0 , SOHNUM_0, BPCNAM_0 FROM GIMAR.SORDER WHERE SHIDAT_0 = '" + DatosInterfaz.FechaOrdenes.ToString() + "' ORDER BY SOHNUM_0";
-				//							0			1		  2
+				String Query = "SELECT LASINVNUM_0 , SOHNUM_0, BPCNAM_0, LASDLVNUM_0, BPCORD_0 FROM GIMAR.SORDER WHERE SHIDAT_0 = '" + DatosInterfaz.FechaOrdenes.ToString() + "' ORDER BY BPCORD_0";
+				//							0			1		  2			3				4
 
 				using (var dr = new SqlCommand(Query, Conexion).ExecuteReader())
 				{
@@ -58,7 +58,9 @@ namespace VisorPedidosFacturados
 						{
 							IdPedido = dr.GetString(1),
 							NombreCliente = dr.GetString(2),
-							NumeroFactura = dr.GetString(0)
+							NumeroFactura = dr.GetString(0),
+							NumeroEntrega = dr.GetString(3),
+							CodigoCliente = dr.GetString(4)
 						}) ;
 					}
 				}

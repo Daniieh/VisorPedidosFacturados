@@ -12,20 +12,46 @@ namespace VisorPedidosFacturados.Clases
 		public string IdPedido { get; set; }
 		public string NombreCliente { get; set; }
 		public string NumeroFactura { get; set; }
+		public string NumeroEntrega { get; set; }
+		public string CodigoCliente { get; set; }
 
 		public System.Windows.Media.Brush ColorFondoPedido
 		{
 			get
 			{
-				if(!NumeroFactura.Equals(" "))
+
+				if (!NumeroEntrega.Equals(" "))
 				{
-					return Brushes.Green;
-				}else
+					if (!NumeroFactura.Equals(" "))
+					{
+						return Brushes.Green;
+					}
+					else
+					{
+						return Brushes.Red;
+					}
+				}
+				else
 				{
 					return Brushes.Transparent;
 				}
 			}
 		}
 
+
+		public string TextoPedido
+		{
+			get
+			{
+				if (!NumeroEntrega.Equals(" "))
+				{
+					return NumeroEntrega;
+				}
+				else
+				{
+					return IdPedido;
+				}
+			}
+		}
 	}
 }
